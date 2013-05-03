@@ -6,7 +6,8 @@ open Hashtbl;;
 module StringMap = Map.Make(String);;
 
 (* Variant Types *)
-type op = BinaryOp of (Num.num -> Num.num -> Num.num)
+type op = UnaryOp of (Num.num -> Num.num)
+        | BinaryOp of (Num.num -> Num.num -> Num.num)
         | TrinaryOp of (Num.num -> Num.num -> Num.num -> Num.num);;
 
 (* returns a tuple (bool, val) *)
@@ -23,6 +24,7 @@ let rec dump_stack stk =
                 Stack.push elem stk;;
 
 let eval_op op stk = let res = match op with
+        | UnaryOp f -> f (Stack.pop stk)
         | BinaryOp f -> let oprnd1 = Stack.pop stk in
                 let oprnd2 = Stack.pop stk in
                 f oprnd2 oprnd1
