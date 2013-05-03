@@ -2,7 +2,7 @@ open Printf;;
 open Num;;      (* arbitrary precision numbers *)
 open Hashtbl;;
 
-(* HashTable Module *)
+(* Map module for the operation table *)
 module StringMap = Map.Make(String);;
 
 (* Variant Types *)
