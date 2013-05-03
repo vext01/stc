@@ -8,7 +8,10 @@ module StringMap = Map.Make(String);;
 (* Variant Types *)
 type op = UnaryOp of (Num.num -> Num.num)
         | BinaryOp of (Num.num -> Num.num -> Num.num)
-        | TrinaryOp of (Num.num -> Num.num -> Num.num -> Num.num);;
+        | TrinaryOp of (Num.num -> Num.num -> Num.num -> Num.num)
+        | SpecialOp of (Num.num Stack.t -> unit );;
+
+type err = Parse_error | Stack_underflow;;
 
 (* returns a tuple (bool, val) *)
 let is_num s =
@@ -23,16 +26,19 @@ let rec dump_stack stk =
                 Printf.printf "  %s\n" (string_of_num elem);
                 Stack.push elem stk;;
 
-let eval_op op stk = let res = match op with
-        | UnaryOp f -> f (Stack.pop stk)
+let eval_op op stk = match op with
+        | UnaryOp f -> let res = f (Stack.pop stk) in
+                Stack.push res stk
         | BinaryOp f -> let oprnd1 = Stack.pop stk in
                 let oprnd2 = Stack.pop stk in
-                f oprnd2 oprnd1
+                let res = f oprnd2 oprnd1 in
+                Stack.push res stk
         | TrinaryOp f -> let oprnd1 = Stack.pop stk in
                 let oprnd2 = Stack.pop stk in
                 let oprnd3 = Stack.pop stk in
-                f oprnd3 oprnd2 oprnd1
-        in Stack.push res stk;;
+                let res = f oprnd3 oprnd2 oprnd1 in
+                Stack.push res stk
+        | SpecialOp f -> f stk;;
 
 (* second level parsing *)
 let parse_operator stk optab line =
@@ -55,6 +61,16 @@ let read_loop optab =
                 if String.length x != 0 then parse_line stk optab x
         done;;
 
+let print_err x = match x with
+        | Stack_underflow -> print_string "stack underflow\n"
+        | Parse_error -> print_string "parse error\n";;
+
+let op_del stk = 
+        if (Stack.length stk) < 1 then
+                print_err Stack_underflow
+        else
+                ignore (Stack.pop stk);;
+
 (* create and load up the operation mapping *)
 let init_optab () =
         let optab = ref StringMap.empty in
@@ -62,6 +78,7 @@ let init_optab () =
         optab := StringMap.add "-" (BinaryOp Num.sub_num) !optab;
         optab := StringMap.add "*" (BinaryOp Num.mult_num) !optab;
         optab := StringMap.add "/" (BinaryOp Num.div_num) !optab;
+        optab := StringMap.add "`" (SpecialOp op_del) !optab;
         !optab;;
 
 (* ---[ MAIN ] --- *)
