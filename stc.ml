@@ -89,6 +89,9 @@ let read_loop optab =
         done;;
 
 let op_del stk = ignore (Stack.pop stk);;
+let op_swap stk = let o1 = Stack.pop stk in
+        let o2 = Stack.pop stk in
+        Stack.push o1 stk; Stack.push o2 stk;;
 
 (* create and load up the operation mapping *)
 let init_optab () =
@@ -98,6 +101,7 @@ let init_optab () =
         optab := StringMap.add "*" (BinaryOp Num.mult_num) !optab;
         optab := StringMap.add "/" (BinaryOp Num.div_num) !optab;
         optab := StringMap.add "`" (SpecialOp (op_del, 1)) !optab;
+        optab := StringMap.add "s" (SpecialOp (op_swap, 2)) !optab;
         !optab;;
 
 (* ---[ MAIN ] --- *)
