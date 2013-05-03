@@ -84,7 +84,8 @@ let read_loop optab =
         while true do
                 dump_stack stk;
                 print_string("-> ");
-                let x = read_line() in
+                let x = try read_line() with
+                        End_of_file -> print_string "\n"; exit 0 in
                 if String.length x != 0 then parse_line stk optab x
         done;;
 
