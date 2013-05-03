@@ -73,7 +73,7 @@ let parse_operator stk optab line =
         eval_op op stk
         with Not_found -> print_string " **parse error\n";;
 
-(* top level parsing, returns new stack *)
+(* top level parsing *)
 let parse_line stk optab line =
         match is_num line with
         | (true, x) -> Stack.push x stk
