@@ -22,16 +22,15 @@ let rec dump_stack stk =
                 Printf.printf "  %s\n" (string_of_num elem);
                 Stack.push elem stk;;
 
-let eval_op op stk = match op with
+let eval_op op stk = let res = match op with
         | BinaryOp f -> let oprnd1 = Stack.pop stk in
                 let oprnd2 = Stack.pop stk in
-                let res = f oprnd1 oprnd2 in
-                Stack.push res stk
+                f oprnd1 oprnd2
         | TrinaryOp f -> let oprnd1 = Stack.pop stk in
                 let oprnd2 = Stack.pop stk in
                 let oprnd3 = Stack.pop stk in
-                let res = f oprnd1 oprnd2 oprnd3 in
-                Stack.push res stk;;
+                f oprnd1 oprnd2 oprnd3
+        in Stack.push res stk;;
 
 (* second level parsing *)
 let parse_operator stk optab line =
