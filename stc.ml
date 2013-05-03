@@ -88,11 +88,7 @@ let read_loop optab =
                 if String.length x != 0 then parse_line stk optab x
         done;;
 
-let op_del stk = 
-        if (Stack.length stk) < 1 then
-                print_err Stack_underflow
-        else
-                ignore (Stack.pop stk);;
+let op_del stk = ignore (Stack.pop stk);;
 
 (* create and load up the operation mapping *)
 let init_optab () =
