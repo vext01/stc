@@ -25,11 +25,11 @@ let rec dump_stack stk =
 let eval_op op stk = let res = match op with
         | BinaryOp f -> let oprnd1 = Stack.pop stk in
                 let oprnd2 = Stack.pop stk in
-                f oprnd1 oprnd2
+                f oprnd2 oprnd1
         | TrinaryOp f -> let oprnd1 = Stack.pop stk in
                 let oprnd2 = Stack.pop stk in
                 let oprnd3 = Stack.pop stk in
-                f oprnd1 oprnd2 oprnd3
+                f oprnd3 oprnd2 oprnd1
         in Stack.push res stk;;
 
 (* second level parsing *)
@@ -53,14 +53,15 @@ let read_loop optab =
                 if String.length x != 0 then parse_line stk optab x
         done;;
 
-let main () =
-        print_string "Edd's Stacked Calculator\n";
-
-        (* load up the optab *)
+(* create and load up the operation mapping *)
+let init_optab () =
         let optab = ref StringMap.empty in
         optab := StringMap.add "+" (BinaryOp Num.add_num) !optab;
+        optab := StringMap.add "-" (BinaryOp Num.sub_num) !optab;
+        optab := StringMap.add "*" (BinaryOp Num.mult_num) !optab;
+        optab := StringMap.add "/" (BinaryOp Num.div_num) !optab;
+        !optab;;
 
-        (* go *)
-        read_loop !optab;;
-
-main();;
+(* ---[ MAIN ] --- *)
+print_string "Edd's Stacked Calculator\n";
+read_loop (init_optab ());;
