@@ -1,4 +1,8 @@
 all: stc
 
-stc: stc.ml ops.ml
-	ocamlfind ocamlc -g -package num -linkpkg -o $@ ops.ml stc.ml
+stc: parse.ml types.ml stc.ml ops.ml
+	ocamlfind ocamlc -g -package num -linkpkg -o $@ types.ml parse.ml ops.ml stc.ml
+
+.PHONY: clean
+clean:
+	rm -f *.cmi *.cmo *.cmxa *.cmxo
