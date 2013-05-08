@@ -47,6 +47,16 @@ let op_eval optab stk =
             | Unevaluated s -> parse stk optab s
             | _ -> raise Type_error
 
+let op_fold optab stk =
+    if length stk < 2 then
+        raise Stack_underflow
+    else let e = pop stk in match e with
+        | Unevaluated x -> let times = (length stk) - 1 in
+            for i=1 to times do
+                push e stk; op_eval optab stk
+            done
+        | _ -> raise Type_error
+
 (* create and load up the operation mapping *)
 let optab () =
     let optab = ref OpMap.empty in
@@ -60,4 +70,5 @@ let optab () =
     optab := OpMap.add "s" op_swap !optab;
     optab := OpMap.add "c" Stack.clear !optab;
     optab := OpMap.add "e" (op_eval !optab) !optab;
+    optab := OpMap.add "f" (op_fold !optab) !optab;
     !optab;;
