@@ -38,9 +38,10 @@ let dump_stack stk =
 
 (* second level parsing *)
 let parse_operator stk optab line =
-        try let op = StringMap.find line optab in
-        op stk
-        with Not_found -> print_string " **parse error\n";;
+        let op = try Some (StringMap.find line optab)
+        with Not_found -> None in try (match op with
+        | None -> print_err Parse_error
+        | Some f -> f stk) with Stack.Empty -> print_err Stack_underflow;;
 
 (* top level parsing *)
 let parse_line stk optab line =
