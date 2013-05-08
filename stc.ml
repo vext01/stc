@@ -19,13 +19,23 @@ let is_num s =
         | Failure "num_of_string" -> (false, (num_of_int 0)) in
         i;;
 
-let rec dump_stack stk =
+let top_stack_str stk = let top = try Some (Stack.top stk) with
+        Stack.Empty -> None in match top with
+        | None -> ""
+        | Some x -> Num.string_of_num x;;
+
+let rec dump_stack' stk =
         match Stack.length stk with
         | 0 -> ()
-        | _ -> let elem = Stack.pop stk in dump_stack stk;
+        | _ -> let elem = Stack.pop stk in dump_stack' stk;
                 Printf.printf "  %s\n" (string_of_num elem);
                 Stack.push elem stk;;
- 
+
+let dump_stack stk =
+        print_string "--------\n";
+        dump_stack' stk;
+        print_string "--------\n";;
+
 (* second level parsing *)
 let parse_operator stk optab line =
         try let op = StringMap.find line optab in
@@ -38,10 +48,13 @@ let parse_line stk optab line =
         | (true, x) -> Stack.push x stk
         | (false, _) -> parse_operator stk optab line;;
 
+let print_prompt stk = let top = top_stack_str stk in
+        Printf.printf "%d: %s> " (Stack.length stk) top;;
+
 let read_loop optab =
         let stk = Stack.create() in
         while true do
-                Printf.printf "%3u -> " (Stack.length stk);
+                print_prompt stk;
                 let x = try read_line() with
                         End_of_file -> print_string "\n"; exit 0 in
                 if String.length x != 0 then parse_line stk optab x
