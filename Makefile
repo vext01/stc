@@ -1,6 +1,6 @@
 all: stc
 
-SOURCES=	types.ml parse.ml ops.ml stc.ml
+SOURCES=	util.ml types.ml parse.ml ops.ml stc.ml
 
 stc: parse.ml types.ml stc.ml ops.ml
 	ocamlfind ocamlc -package num -linkpkg -o $@ ${SOURCES}
