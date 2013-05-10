@@ -2,10 +2,9 @@ open Printf
 open Num
 open Types
 open Stack
-open Ops
-open Parse
 
-(* Functions *)
+(* Functions XXX tighten up *)
+(*
 let print_err x = match x with
     | Stack_underflow -> print_string "stack underflow\n"
     | Parse_error -> print_string "parse error\n"
@@ -24,7 +23,9 @@ let top_stack_str stk = let top = try Some (Stack.top stk) with
 
 let print_prompt stk = let top = top_stack_str stk in
     Printf.printf "%d: %s -- " (Stack.length stk) top
+*)
 
+    (*
 let read_loop optab =
     let stk = Stack.create() in
     while true do
@@ -34,7 +35,18 @@ let read_loop optab =
             if String.length x != 0 then try parse stk optab x with e ->
                 print_err e
     done;;
+*)
 
+let read_loop () =
+    let stk = Stack.create() in
+    try
+        let lexbuf = Lexing.from_channel stdin in
+        while true do
+            let l = Parser.input Lexer.token lexbuf in
+            printf "Got a list of %d elems\n" (List.length l); ignore (flush stdout);
+        done
+    with End_of_file -> exit 0;;
+      
 (* ---[ MAIN ] --- *)
-print_string "Edd's Stacked Calculator\n";
-read_loop (optab ())
+(* read_loop (optab ()) *)
+read_loop ()

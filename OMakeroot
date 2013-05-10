@@ -1,0 +1,10 @@
+include $(STDLIB)/build/Common
+include $(STDLIB)/build/C
+include $(STDLIB)/build/OCaml
+include $(STDLIB)/build/LaTeX
+
+BYTE_ENABLED = true
+NATIVE_ENABLED = false
+OCAMLCFLAGS = -g
+
+.SUBDIRS: .

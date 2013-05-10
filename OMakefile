@@ -1,0 +1,6 @@
+USE_OCAMLFIND = true
+
+OCAMLPACKS[] += num
+
+OCamlProgram(stc, types parser lexer stc)
+.DEFAULT: stc.run
