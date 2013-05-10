@@ -13,24 +13,27 @@
 %token ENDLINE
 
 %start input
-%type <Types.stack_elem list> input
+%type <Types.command list> input
 
 %%
 
 input:
     | /* empty */   { [] }
-    | expr ENDLINE  { printf "got expr\n"; fso(); $1 }
+    | expr ENDLINE  { $1 }
 
 expr:
-    | BIGNUM            { printf "got bignum \n"; fso(); [ Stack_num $1 ] }
-    | oper              { printf "got op\n"; fso(); [ $1 ] }
-    | expr COMMA expr   { printf "got composite\n"; fso(); $1 @ $3 }
-    | uneval            { [ Stack_uneval $1 ] }
+    | expr COMMA term   { $1 @ $3 }
+    | term              { $1 }
     ;
 
+term:
+    | oper              { [ $1 ] }
+    | BIGNUM            { [ Stack_elem (Stack_num $1) ] }
+    | uneval            { [ Stack_elem (Uneval $1) ] }
+
 oper:
-    | PLUS              { Stack_plus }
-    | MINUS             { Stack_minus }
+    | PLUS              { Operator Plus }
+    | MINUS             { Operator Minus }
 
 uneval:
     | LCHEV expr RCHEV       { $2 }

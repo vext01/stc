@@ -1,6 +1,6 @@
 all:
 	ocamlc -c types.ml
-	ocamlyacc parser.mly
+	ocamlyacc -v parser.mly
 	ocamlc -c parser.mli
 	ocamllex lexer.mll
 	ocamlc -c lexer.ml

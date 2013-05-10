@@ -1,5 +1,9 @@
+type operator =
+    | Plus
+    | Minus
+
 type stack_elem =
     | Stack_num of Num.num
-    | Stack_uneval of stack_elem list
-    | Stack_plus
-    | Stack_minus
+    | Uneval of command list
+and
+command = Stack_elem of stack_elem | Operator of operator
