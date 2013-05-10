@@ -28,12 +28,12 @@ expr:
 
 term:
     | oper              { [ $1 ] }
-    | BIGNUM            { [ Stack_elem (Stack_num $1) ] }
-    | uneval            { [ Stack_elem (Uneval $1) ] }
+    | BIGNUM            { [ Stk_elem (Stk_num $1) ] }
+    | uneval            { [ Stk_elem (Stk_uneval $1) ] }
 
 oper:
-    | PLUS              { Operator Plus }
-    | MINUS             { Operator Minus }
+    | PLUS              { Oper Oper_plus }
+    | MINUS             { Oper Oper_minus }
 
 uneval:
     | LCHEV expr RCHEV       { $2 }

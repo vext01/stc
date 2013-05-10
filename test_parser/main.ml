@@ -5,8 +5,8 @@ open Types
 let rec print_list ls = match ls with
 | [] -> ()
 | l -> match List.hd l with
-    | Operator x -> printf "+/-\n"
-    | Stack_elem x -> printf "stack elem\n"
+    | Oper x -> printf "+/-\n"
+    | Stk_elem x -> printf "stack elem\n"
 
 let main () =
     try
