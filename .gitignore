@@ -3,3 +3,10 @@
 *.cmxa
 *.cmxo
 stc
+.omakedb*
+*.omc
+lexer.ml
+parser.ml
+*.mli
+stc.run
+stc.opt
