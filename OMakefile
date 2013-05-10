@@ -4,3 +4,7 @@ OCAMLPACKS[] += num
 
 OCamlProgram(stc, types parser lexer stc)
 .DEFAULT: stc.run
+
+.PHONY: clean
+clean:
+	rm $(filter-proper-targets $(ls R, .))
