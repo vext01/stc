@@ -37,13 +37,22 @@ let read_loop optab =
     done;;
 *)
 
+let eval_command stk c = match c with
+    | Stk_elem x -> push x stk
+    | Oper x -> ()
+
+let eval_command_list stk l =
+    List.iter (eval_command stk) l
+
 let read_loop () =
     let stk = Stack.create() in
     try
         let lexbuf = Lexing.from_channel stdin in
         while true do
+            printf ("%d> ") (Stack.length stk); flush stdout;
             let l = Parser.input Lexer.token lexbuf in
             printf "Got a list of %d elems\n" (List.length l); ignore (flush stdout);
+            eval_command_list stk l
         done
     with End_of_file -> exit 0;;
       
