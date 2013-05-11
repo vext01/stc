@@ -7,7 +7,6 @@
 %}
 
 %token <Num.num> BIGNUM
-%token <string> ARBITRARY
 %token LCHEV RCHEV COMMA
 %token PLUS MINUS
 %token ENDLINE
@@ -18,13 +17,12 @@
 %%
 
 input:
-    | /* empty */   { [] }
-    | expr ENDLINE  { $1 }
+    | /* empty */       { [] }
+    | expr ENDLINE      { $1 }
 
 expr:
     | expr COMMA term   { $1 @ $3 }
     | term              { $1 }
-    ;
 
 term:
     | oper              { [ $1 ] }
@@ -36,5 +34,5 @@ oper:
     | MINUS             { Oper Oper_minus }
 
 uneval:
-    | LCHEV expr RCHEV       { $2 }
+    | LCHEV expr RCHEV  { $2 }
 %%
