@@ -13,9 +13,9 @@ let op_eval_simple f stk =
 let op_del stk = ignore (Stack.pop stk);;
 
 let op_dump stk =
-    print_string "--------\n";
-    dump_stack stk;
-    print_string "--------\n";;
+    print_string "\n";
+    dump_stack stk (Stack.length stk);
+    print_string "\n";;
 
 let op_del stk = ignore (Stack.pop stk);;
 

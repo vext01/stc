@@ -15,10 +15,10 @@ and stack_elem_str x = match x with
     | Stk_uneval u -> let cmd_strs = List.map (command_str) u in
         let s = String.concat ", " cmd_strs in sprintf "<%s>" s
 
-let rec dump_stack stk =
+let rec dump_stack stk n =
     if Stack.length stk = 0 then
         ()
     else
-        let elem = Stack.pop stk in dump_stack stk;
-        printf "%s\n" (stack_elem_str elem); flush stdout;
+        let elem = Stack.pop stk in dump_stack stk (n - 1);
+        printf "  %3u: %s\n" n (stack_elem_str elem); flush stdout;
         push elem stk 
