@@ -16,14 +16,7 @@ let op_eval_simple f stk =
         | _ -> raise Type_error
         (* | _ -> push arg2 stk; push arg1 stk; raise Type_error *)
 
-        (*
 let op_del stk = ignore (Stack.pop stk);;
-
-let op_swap stk =
-    let arg2 = Stack.pop stk in
-    let arg1 = Stack.pop stk in
-    Stack.push arg1 stk; Stack.push arg2 stk;;
-
 
 let op_dump_stack stk =
     print_string "--------\n";
@@ -36,6 +29,7 @@ let op_swap stk = let o1 = Stack.pop stk in
     let o2 = Stack.pop stk in
     Stack.push o1 stk; Stack.push o2 stk;;
 
+(*
 let op_eval optab stk =
     if length stk < 1 then
         raise Stack_underflow
@@ -43,7 +37,9 @@ let op_eval optab stk =
         let e = pop stk in match e with
             | Unevaluated s -> parse stk optab s
             | _ -> raise Type_error
+            *)
 
+(*
 let op_fold optab stk =
     if length stk < 2 then
         raise Stack_underflow

@@ -33,6 +33,9 @@ let eval_oper stk o = match o with
     | Oper_minus -> Ops.op_eval_simple Num.sub_num stk
     | Oper_mult -> Ops.op_eval_simple Num.mult_num stk
     | Oper_div -> Ops.op_eval_simple Num.div_num stk
+    | Oper_del -> Ops.op_del stk
+    | Oper_clear -> Stack.clear stk
+    | Oper_swap -> Ops.op_swap stk
     | _ -> printf "not implemented"
 
 let eval_command stk c = match c with
