@@ -39,14 +39,10 @@ let op_eval optab stk =
             | _ -> raise Type_error
             *)
 
-(*
 let op_fold optab stk =
-    if length stk < 2 then
-        raise Stack_underflow
-    else let e = pop stk in match e with
-        | Unevaluated x -> let times = (length stk) - 1 in
+    let e = pop stk in match e with
+        | Stk_elem Stk_uneval x -> let times = (length stk) - 1 in
             for i=1 to times do
-                push e stk; op_eval optab stk
+                push e stk; Eval.eval_command_list optab stk
             done
         | _ -> raise Type_error
-        *)

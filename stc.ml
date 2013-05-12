@@ -24,36 +24,16 @@ let top_stack_str stk =
 let print_prompt stk = let top = top_stack_str stk in
     Printf.printf "%d: %s -- " (Stack.length stk) top; flush stdout
 
-let eval_oper stk o = match o with
-    | Oper_plus -> Ops.op_eval_simple Num.add_num stk
-    | Oper_minus -> Ops.op_eval_simple Num.sub_num stk
-    | Oper_mult -> Ops.op_eval_simple Num.mult_num stk
-    | Oper_div -> Ops.op_eval_simple Num.div_num stk
-    | Oper_del -> Ops.op_del stk
-    | Oper_clear -> Stack.clear stk
-    | Oper_swap -> Ops.op_swap stk
-    | Oper_dump -> Ops.op_dump stk
-    | Oper_eval -> () (* XXX *)
-    | Oper_fold -> () (* XXX *)
-
-let eval_command stk c = match c with
-    | Stk_elem x -> push x stk
-    | Oper x -> eval_oper stk x
-
-let eval_command_list stk l =
-    List.iter (eval_command stk) l
-
 let read_loop () =
     let stk = Stack.create() in
     try
         let lexbuf = Lexing.from_channel stdin in
         while true do
-            (* printf ("%d> ") (Stack.length stk); flush stdout; *)
             print_prompt stk;
             (* XXX tidy *)
             let l = try Parser.input Lexer.token lexbuf with
                 | Parsing.Parse_error -> [] in
-            (try eval_command_list stk l with
+            (try Eval.eval_command_list stk l with
                 | Stack_underflow -> print_string "stack underflow\n"
                 | Parse_error -> print_string "parse error\n"
             );
