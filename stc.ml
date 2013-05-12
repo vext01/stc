@@ -33,7 +33,7 @@ let read_loop () =
             (* XXX tidy *)
             let l = try Parser.input Lexer.token lexbuf with
                 | Parsing.Parse_error -> [] in
-            (try Eval.eval_command_list stk l with
+            (try Ops.eval_command_list stk l with
                 | Stack_underflow -> print_string "stack underflow\n"
                 | Parse_error -> print_string "parse error\n"
             );

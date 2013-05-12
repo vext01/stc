@@ -29,20 +29,33 @@ let op_swap stk = let o1 = Stack.pop stk in
     let o2 = Stack.pop stk in
     Stack.push o1 stk; Stack.push o2 stk;;
 
-(*
-let op_eval optab stk =
-    if length stk < 1 then
-        raise Stack_underflow
-    else
-        let e = pop stk in match e with
-            | Unevaluated s -> parse stk optab s
-            | _ -> raise Type_error
-            *)
-
-let op_fold optab stk =
+let rec op_eval optab stk =
+    let e = pop stk in (match e with
+        | Stk_elem (Stk_uneval l) -> eval_command_list stk l
+        | _ -> ()
+    )
+and op_fold stk = ()
+    (* XXX
     let e = pop stk in match e with
         | Stk_elem Stk_uneval x -> let times = (length stk) - 1 in
             for i=1 to times do
-                push e stk; Eval.eval_command_list optab stk
+                push e stk; eval_command_list stk x
             done
         | _ -> raise Type_error
+        *)
+and eval_oper stk o = match o with
+    | Oper_plus -> op_eval_simple Num.add_num stk
+    | Oper_minus -> op_eval_simple Num.sub_num stk
+    | Oper_mult -> op_eval_simple Num.mult_num stk
+    | Oper_div -> op_eval_simple Num.div_num stk
+    | Oper_del -> op_del stk
+    | Oper_clear -> Stack.clear stk
+    | Oper_swap -> op_swap stk
+    | Oper_dump -> op_dump stk
+    | Oper_eval -> () (* XXX *)
+    | Oper_fold -> op_fold stk
+and eval_command stk c = match c with
+    | Stk_elem x -> Stack.push x stk
+    | Oper x -> eval_oper stk x
+and eval_command_list stk l =
+    List.iter (eval_command stk) l

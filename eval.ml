@@ -1,3 +1,4 @@
+(*
 open Types
 
 let eval_oper stk o = match o with
@@ -18,3 +19,4 @@ let eval_command stk c = match c with
 
 let eval_command_list stk l =
     List.iter (eval_command stk) l
+    *)
