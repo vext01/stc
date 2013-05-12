@@ -16,7 +16,7 @@ rule token = parse
     | digit+ as x   { BIGNUM (num_of_string x) }
     | ','           { COMMA }
     | 's'           { SWAP }
-    | 'p'           { DUMP_STACK }
+    | 'p'           { DUMP }
     | 'e'           { EVAL }
     | '`'           { DEL }
     | 'c'           { CLEAR }

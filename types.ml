@@ -20,6 +20,7 @@ type operator =
     | Oper_del
     | Oper_swap
     | Oper_clear
+    | Oper_dump
     (* black magic *)
     | Oper_eval
     | Oper_fold
