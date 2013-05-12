@@ -13,7 +13,9 @@ rule token = parse
     | '-'           { MINUS }
     | '*'           { MULT }
     | '/'           { DIV }
-    | digit+ as x   { BIGNUM (num_of_string x) }
+    | digit+ as x
+    | digit+ '/' digit+
+    | '-' digit+ as x       { BIGNUM (num_of_string x) }
     | ','           { COMMA }
     | 's'           { SWAP }
     | 'p'           { DUMP }
