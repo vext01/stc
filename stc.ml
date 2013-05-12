@@ -32,17 +32,18 @@ let print_err x = match x with
     | _ -> print_string "  unknown error\n"
 
 let read_loop () =
-    let stk = Stack.create() in
+    let stk = ref (Stack.create ()) in
     try
         let lexbuf = Lexing.from_channel stdin in
         while true do
-            print_prompt stk;
+            print_prompt !stk;
+            let stk_copy = Stack.copy !stk in
             let l = try Some (Parser.input Lexer.token lexbuf) with
                 | Parsing.Parse_error -> None in
             match l with
                 | None -> ()
-                | Some x -> ( try eval_command_list stk x with
-                    | e -> print_err e)
+                | Some x -> ( try eval_command_list !stk x with
+                    | e -> print_err e; stk := stk_copy)
         done
     with End_of_file -> exit 0;;
       
