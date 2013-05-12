@@ -36,7 +36,8 @@ let eval_oper stk o = match o with
     | Oper_del -> Ops.op_del stk
     | Oper_clear -> Stack.clear stk
     | Oper_swap -> Ops.op_swap stk
-    | _ -> printf "not implemented"
+    | Oper_dump -> Ops.op_dump stk
+    | _ -> printf "not implemented\n"
 
 let eval_command stk c = match c with
     | Stk_elem x -> push x stk
@@ -58,7 +59,6 @@ let read_loop () =
                 | Stack_underflow -> print_string "stack underflow\n"
                 | Parse_error -> print_string "parse error\n"
             );
-            dump_stack stk
         done
     with End_of_file -> exit 0;;
       
