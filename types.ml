@@ -1,11 +1,3 @@
-(*
-type stack_item =
-        | StkNum of Num.num
-        | Unevaluated of string
-
-module OpMap = Map.Make(String);;
-*)
-
 exception Type_error
 exception Parse_error
 
@@ -27,5 +19,4 @@ type operator =
 type stack_elem =
     | Stk_num of Num.num
     | Stk_uneval of command list
-and
-command = Stk_elem of stack_elem | Oper of operator
+and command = Stk_elem of stack_elem | Oper of operator
