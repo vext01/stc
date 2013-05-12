@@ -29,7 +29,7 @@ let op_swap stk = let o1 = Stack.pop stk in
     let o2 = Stack.pop stk in
     Stack.push o1 stk; Stack.push o2 stk;;
 
-let rec op_eval optab stk =
+let rec op_eval stk =
     let e = pop stk in (match e with
         | Stk_elem (Stk_uneval l) -> eval_command_list stk l
         | _ -> ()
