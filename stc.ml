@@ -3,6 +3,7 @@ open Num
 open Types
 open Stack
 open Util
+open Eval
 
 let rec command_str x = match x with
     | Oper x -> oper_str x
@@ -24,22 +25,26 @@ let top_stack_str stk =
 let print_prompt stk = let top = top_stack_str stk in
     Printf.printf "%d: %s -- " (Stack.length stk) top; flush stdout
 
+let print_err x = match x with
+    | Stack.Empty -> print_string "  stack underflow\n"
+    | Parse_error -> print_string "  parse error\n"
+    | Type_error -> print_string "  type error\n"
+    | _ -> print_string "  unknown error\n"
+
 let read_loop () =
     let stk = Stack.create() in
     try
         let lexbuf = Lexing.from_channel stdin in
         while true do
             print_prompt stk;
-            (* XXX tidy *)
-            let l = try Parser.input Lexer.token lexbuf with
-                | Parsing.Parse_error -> [] in
-            (try Ops.eval_command_list stk l with
-                | Stack_underflow -> print_string "stack underflow\n"
-                | Parse_error -> print_string "parse error\n"
-            );
+            let l = try Some (Parser.input Lexer.token lexbuf) with
+                | Parsing.Parse_error -> None in
+            match l with
+                | None -> ()
+                | Some x -> ( try eval_command_list stk x with
+                    | e -> print_err e)
         done
     with End_of_file -> exit 0;;
       
 (* ---[ MAIN ] --- *)
-(* read_loop (optab ()) *)
 read_loop ()
