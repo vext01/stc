@@ -37,7 +37,8 @@ let eval_oper stk o = match o with
     | Oper_clear -> Stack.clear stk
     | Oper_swap -> Ops.op_swap stk
     | Oper_dump -> Ops.op_dump stk
-    | _ -> printf "not implemented\n"
+    | Oper_eval -> () (* XXX *)
+    | Oper_fold -> () (* XXX *)
 
 let eval_command stk c = match c with
     | Stk_elem x -> push x stk
