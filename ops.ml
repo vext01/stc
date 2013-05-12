@@ -30,19 +30,17 @@ let op_swap stk = let o1 = Stack.pop stk in
     Stack.push o1 stk; Stack.push o2 stk;;
 
 let rec op_eval stk =
-    let e = pop stk in (match e with
-        | Stk_elem (Stk_uneval l) -> eval_command_list stk l
-        | _ -> ()
+    let e = Stack.pop stk in (match e with
+        | Stk_uneval l -> eval_command_list stk l
+        | _ -> push e stk
     )
-and op_fold stk = ()
-    (* XXX
+and op_fold stk =
     let e = pop stk in match e with
-        | Stk_elem Stk_uneval x -> let times = (length stk) - 1 in
+        | Stk_uneval x -> let times = (length stk) - 1 in
             for i=1 to times do
-                push e stk; eval_command_list stk x
+                push e stk; op_eval stk
             done
         | _ -> raise Type_error
-        *)
 and eval_oper stk o = match o with
     | Oper_plus -> op_eval_simple Num.add_num stk
     | Oper_minus -> op_eval_simple Num.sub_num stk
@@ -52,7 +50,7 @@ and eval_oper stk o = match o with
     | Oper_clear -> Stack.clear stk
     | Oper_swap -> op_swap stk
     | Oper_dump -> op_dump stk
-    | Oper_eval -> () (* XXX *)
+    | Oper_eval -> op_eval stk
     | Oper_fold -> op_fold stk
 and eval_command stk c = match c with
     | Stk_elem x -> Stack.push x stk
