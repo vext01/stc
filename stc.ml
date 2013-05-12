@@ -30,6 +30,9 @@ let print_prompt stk = let top = top_stack_str stk in
 
 let eval_oper stk o = match o with
     | Oper_plus -> Ops.op_eval_simple Num.add_num stk
+    | Oper_minus -> Ops.op_eval_simple Num.sub_num stk
+    | Oper_mult -> Ops.op_eval_simple Num.mult_num stk
+    | Oper_div -> Ops.op_eval_simple Num.div_num stk
     | _ -> printf "not implemented"
 
 let eval_command stk c = match c with

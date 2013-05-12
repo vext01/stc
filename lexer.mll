@@ -11,8 +11,16 @@ rule token = parse
     | '>'           { RCHEV }
     | '+'           { PLUS }
     | '-'           { MINUS }
+    | '*'           { MULT }
+    | '/'           { DIV }
     | digit+ as x   { BIGNUM (num_of_string x) }
     | ','           { COMMA }
+    | 's'           { SWAP }
+    | 'p'           { DUMP_STACK }
+    | 'e'           { EVAL }
+    | '`'           { DEL }
+    | 'c'           { CLEAR }
+    | 'f'           { FOLD }
     | '\n'          { ENDLINE }
     | eof           { raise End_of_file }
     | _             { token lexbuf }
