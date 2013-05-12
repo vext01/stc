@@ -15,18 +15,14 @@ and stack_elem_str x = match x with
     | Stk_uneval u -> let cmd_strs = List.map (command_str) u in
         let s = String.concat ", " cmd_strs in sprintf "<%s>" s
 
-    (*
-let top_stack_str stk = let top = try Some (Stack.top stk) with
-    | Empty -> None in match top with
-    | None -> ""
-    | Some x -> stack_elem_str x
-    *)
+let top_stack_str stk =
+    let top = try Some (Stack.top stk) with
+        | Empty -> None in match top with
+        | None -> ""
+        | Some x -> stack_elem_str x
 
-
-    (*
 let print_prompt stk = let top = top_stack_str stk in
-    Printf.printf "%d: %s -- " (Stack.length stk) top
-*)
+    Printf.printf "%d: %s -- " (Stack.length stk) top; flush stdout
 
 let eval_oper stk o = match o with
     | Oper_plus -> Ops.op_eval_simple Num.add_num stk
@@ -52,7 +48,8 @@ let read_loop () =
     try
         let lexbuf = Lexing.from_channel stdin in
         while true do
-            printf ("%d> ") (Stack.length stk); flush stdout;
+            (* printf ("%d> ") (Stack.length stk); flush stdout; *)
+            print_prompt stk;
             (* XXX tidy *)
             let l = try Parser.input Lexer.token lexbuf with
                 | Parsing.Parse_error -> [] in
