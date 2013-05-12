@@ -9,7 +9,15 @@ let rec command_str x = match x with
     | Stk_elem x -> stack_elem_str x
 and oper_str x = match x with
     | Oper_plus -> "+"
-    | _ -> "?"
+    | Oper_minus -> "-"
+    | Oper_mult -> "*"
+    | Oper_div -> "/"
+    | Oper_del -> "`"
+    | Oper_swap -> "s"
+    | Oper_clear -> "c"
+    | Oper_eval -> "e"
+    | Oper_dump -> "p"
+    | Oper_fold -> "f"
 and stack_elem_str x = match x with
     | Stk_num n -> string_of_num n
     | Stk_uneval u -> let cmd_strs = List.map (command_str) u in
