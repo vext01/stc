@@ -1,18 +1,15 @@
 open Printf
-open Num
 open Types
-open Stack
-open Util
 open Eval
 
 let top_stack_str stk =
     let top = try Some (Stack.top stk) with
-        | Empty -> None in match top with
+        | Stack.Empty -> None in match top with
             | None -> ""
-            | Some x -> stack_elem_str x
+            | Some x -> Util.stack_elem_str x
 
 let print_prompt stk = let top = top_stack_str stk in
-    Printf.printf "%d: %s -- " (Stack.length stk) top; flush stdout
+    printf "%d: %s -- " (Stack.length stk) top; flush stdout
 
 let print_err x = match x with
     | Stack.Empty -> print_string "  stack underflow\n"
