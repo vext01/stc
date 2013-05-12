@@ -10,21 +10,21 @@ let op_eval_simple f stk =
         | (Stk_num a1, Stk_num a2) -> let res = f a1 a2 in push (Stk_num res) stk
         | _ -> raise Type_error
 
-let op_del stk = ignore (Stack.pop stk);;
+let op_del stk = ignore (pop stk);;
 
 let op_dump stk =
     print_string "\n";
     dump_stack stk (Stack.length stk);
     print_string "\n";;
 
-let op_del stk = ignore (Stack.pop stk);;
+let op_del stk = ignore (pop stk);;
 
-let op_swap stk = let o1 = Stack.pop stk in
-    let o2 = Stack.pop stk in
-    Stack.push o1 stk; Stack.push o2 stk;;
+let op_swap stk = let o1 = pop stk in
+    let o2 = pop stk in
+    push o1 stk; push o2 stk;;
 
 let rec op_eval stk =
-    let e = Stack.pop stk in match e with
+    let e = pop stk in match e with
         | Stk_uneval l -> eval_command_list stk l
         | _ -> push e stk
 and op_fold stk =
@@ -46,7 +46,7 @@ and eval_oper stk o = match o with
     | Oper_eval -> op_eval stk
     | Oper_fold -> op_fold stk
 and eval_command stk c = match c with
-    | Stk_elem x -> Stack.push x stk
+    | Stk_elem x -> push x stk
     | Oper x -> eval_oper stk x
 and eval_command_list stk l =
     List.iter (eval_command stk) l
