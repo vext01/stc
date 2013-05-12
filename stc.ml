@@ -51,10 +51,12 @@ let read_loop () =
         let lexbuf = Lexing.from_channel stdin in
         while true do
             printf ("%d> ") (Stack.length stk); flush stdout;
-            let l = Parser.input Lexer.token lexbuf in
+            (* XXX tidy *)
+            let l = try Parser.input Lexer.token lexbuf with
+                | Parsing.Parse_error -> [] in
             (try eval_command_list stk l with
-                | Stack_underflow -> printf "stack underflow\n"
-                | Parse_error -> printf "parse error\n"
+                | Stack_underflow -> print_string "stack underflow\n"
+                | Parse_error -> print_string "parse error\n"
             );
             dump_stack stk
         done
