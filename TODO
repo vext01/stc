@@ -1,3 +1,6 @@
- - Check stack length on all ops
- - push back args on error
- - allow multi params on one line 1;2;3;4;5 (will allow macros)
+ * Decimal notations
+ * Registers
+ * 'l' for load
+ * stcrc
+ * save?
+ * fixed-width stack types
