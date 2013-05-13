@@ -3,7 +3,7 @@ all:
 
 .PHONY: static
 static:
-	omake OCAMLOPTFLAGS="-ccopt -Wl,-static" stc.opt
+	omake OCAMLOPTFLAGS="-ccopt -Wl,-static -ccopt -static-libgcc" stc.opt
 
 .PHONY: clean
 clean:
