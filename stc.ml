@@ -31,7 +31,7 @@ let read_loop () =
                 | Some x -> ( try eval_command_list !stk x with
                     | e -> print_err e; stk := stk_copy)
         done
-    with End_of_file -> exit 0;;
+    with End_of_file -> print_string "\n"; exit 0;;
       
 (* ---[ MAIN ] --- *)
 read_loop ()
