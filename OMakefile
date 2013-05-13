@@ -3,7 +3,7 @@ USE_OCAMLFIND = true
 OCAMLPACKS[] += num
 
 OCamlProgram(stc, types parser lexer util eval stc)
-.DEFAULT: stc.run
+.DEFAULT: stc.run stc.opt
 
 .PHONY: clean
 clean:
