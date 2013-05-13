@@ -14,6 +14,7 @@ let print_prompt stk = let top = top_stack_str stk in
 let print_err x = match x with
     | Stack.Empty -> print_string "  stack underflow\n"
     | Type_error -> print_string "  type error\n"
+    | No_reg_error -> print_string "  no such register\n"
     | _ -> print_string "unknown error\n"
 
 let read_loop () =
@@ -30,6 +31,7 @@ let read_loop () =
                 | None -> ()
                 | Some x -> try eval_command_list !stk regtab x with
                     | Stack.Empty
+                    | No_reg_error
                     | Type_error as e -> print_err e; stk := stk_copy
         done
     with End_of_file -> print_string "\n"; exit 0;;
