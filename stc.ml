@@ -13,9 +13,7 @@ let print_prompt stk = let top = top_stack_str stk in
 
 let print_err x = match x with
     | Stack.Empty -> print_string "  stack underflow\n"
-    | Parse_error -> print_string "  parse error\n"
     | Type_error -> print_string "  type error\n"
-    | _ -> print_string "  unknown error\n"
 
 let read_loop () =
     let stk = ref (Stack.create ()) in
@@ -25,11 +23,12 @@ let read_loop () =
             print_prompt !stk;
             let stk_copy = Stack.copy !stk in
             let l = try Some (Parser.input Lexer.token lexbuf) with
-                | Parsing.Parse_error -> None in
+                | Parsing.Parse_error -> Lexing.flush_input lexbuf; None in
             match l with
                 | None -> ()
-                | Some x -> ( try eval_command_list !stk x with
-                    | e -> print_err e; stk := stk_copy)
+                | Some x -> try eval_command_list !stk x with
+                    | Stack.Empty
+                    | Type_error as e -> print_err e; stk := stk_copy
         done
     with End_of_file -> print_string "\n"; exit 0;;
       
