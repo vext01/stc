@@ -17,6 +17,7 @@ let print_err x = match x with
     | _ -> print_string "unknown error\n"
 
 let read_loop () =
+    let regtab = Hashtbl.create 16 in
     let stk = ref (Stack.create ()) in
     try
         let lexbuf = Lexing.from_channel stdin in
@@ -27,7 +28,7 @@ let read_loop () =
                 | Parsing.Parse_error -> Lexing.flush_input lexbuf; None in
             match l with
                 | None -> ()
-                | Some x -> try eval_command_list !stk x with
+                | Some x -> try eval_command_list !stk regtab x with
                     | Stack.Empty
                     | Type_error as e -> print_err e; stk := stk_copy
         done

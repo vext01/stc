@@ -39,18 +39,18 @@ let op_store stk = ()
 let op_recall stk = ()
 let op_regs stk = ()
 
-let rec op_eval stk =
+let rec op_eval stk regtab =
     let e = pop stk in match e with
-        | Stk_uneval l -> eval_command_list stk l
+        | Stk_uneval l -> eval_command_list stk regtab l
         | _ -> push e stk
-and op_fold stk =
+and op_fold stk regtab =
     let e = pop stk in match e with
         | Stk_uneval x -> let times = (length stk) - 1 in
             for i=1 to times do
-                push e stk; op_eval stk
+                push e stk; op_eval stk regtab
             done
         | _ -> raise Type_error
-and eval_oper stk o = match o with
+and eval_oper stk regtab o = match o with
     | Oper_plus -> op_eval_simple Num.add_num stk
     | Oper_minus -> op_eval_simple Num.sub_num stk
     | Oper_mult -> op_eval_simple Num.mult_num stk
@@ -59,8 +59,8 @@ and eval_oper stk o = match o with
     | Oper_clear -> Stack.clear stk
     | Oper_swap -> op_swap stk
     | Oper_dump -> op_dump stk
-    | Oper_eval -> op_eval stk
-    | Oper_fold -> op_fold stk
+    | Oper_eval -> op_eval stk regtab
+    | Oper_fold -> op_fold stk regtab
     | Oper_approx -> op_approx stk
     | Oper_dup -> op_dup stk
     | Oper_mod -> op_eval_simple Num.mod_num stk
@@ -69,8 +69,8 @@ and eval_oper stk o = match o with
     | Oper_store -> op_store stk
     | Oper_recall -> op_recall stk
     | Oper_regs -> op_regs stk
-and eval_command stk c = match c with
+and eval_command stk regtab c = match c with
     | Stk_elem x -> push x stk
-    | Oper x -> eval_oper stk x
-and eval_command_list stk l =
-    List.iter (eval_command stk) l
+    | Oper x -> eval_oper stk regtab x
+and eval_command_list stk regtab l =
+    List.iter (eval_command stk regtab) l
