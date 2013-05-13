@@ -1,4 +1,5 @@
 exception Type_error
+exception No_reg_error
 
 type operator =
     (* arithmetic *)

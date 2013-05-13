@@ -35,9 +35,21 @@ let op_abs stk = match pop stk with
         | Stk_num o -> push (Stk_num (abs_num o)) stk
         | _ -> raise Type_error
 
-let op_store stk = ()
-let op_recall stk = ()
-let op_regs stk = ()
+let op_store stk regtab = 
+    let (r, v) = (pop stk, pop stk) in match (r, v) with
+        | (v, Stk_reg r') -> Hashtbl.add regtab r' v
+        | _ -> raise Type_error
+
+let op_recall stk regtab = match (pop stk)  with
+    | Stk_reg r -> let v = try Hashtbl.find regtab r with
+        | Not_found -> raise No_reg_error in push v stk
+    | _ -> raise Type_error
+
+let print_reg_entry k v = printf "  %s := %s\n" k (stack_elem_str v)
+let op_regs stk regtab =
+    print_string "\n";
+    Hashtbl.iter print_reg_entry regtab;
+    print_string "\n"
 
 let rec op_eval stk regtab =
     let e = pop stk in match e with
@@ -66,9 +78,9 @@ and eval_oper stk regtab o = match o with
     | Oper_mod -> op_eval_simple Num.mod_num stk
     | Oper_pow -> op_eval_simple Num.power_num stk
     | Oper_abs -> op_abs stk
-    | Oper_store -> op_store stk
-    | Oper_recall -> op_recall stk
-    | Oper_regs -> op_regs stk
+    | Oper_store -> op_store stk regtab
+    | Oper_recall -> op_recall stk regtab
+    | Oper_regs -> op_regs stk regtab
 and eval_command stk regtab c = match c with
     | Stk_elem x -> push x stk
     | Oper x -> eval_oper stk regtab x
