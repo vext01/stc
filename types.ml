@@ -21,6 +21,7 @@ type operator =
     | Oper_recall
     | Oper_regs
     | Oper_clearreg
+    | Oper_evalreg of string
     (* black magic *)
     | Oper_eval
     | Oper_fold

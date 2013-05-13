@@ -43,6 +43,7 @@ rule token = parse
     | '^'                   { POW }
     | '\n'                  { ENDLINE }
     | '$' alphanum as x     { REG x }
+    | '$''$' alphanum as x  { EVALREG x }
     | 'S'                   { STORE }
     | 'R'                   { RECALL }
     | 'r'                   { REGS }

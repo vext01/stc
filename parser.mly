@@ -8,6 +8,7 @@
 
 %token <Num.num> BIGNUM
 %token <string> REG
+%token <string> EVALREG
 %token LCHEV RCHEV COMMA
 %token PLUS MINUS DIV MULT
 %token REG REGS STORE RECALL CLEARREG
@@ -55,6 +56,7 @@ oper:
     | STORE             { Oper Oper_store }
     | RECALL            { Oper Oper_recall }
     | CLEARREG          { Oper Oper_clearreg }
+    | EVALREG           { Oper (Oper_evalreg $1) }
 
 uneval:
     | LCHEV expr RCHEV  { $2 }

@@ -58,11 +58,15 @@ let op_clearref stk regtab = match (pop stk) with
         )
     | _ -> raise Type_error
 
+
 let rec op_eval stk regtab =
     let e = pop stk in match e with
         | Stk_uneval l -> eval_command_list stk regtab l
         | Stk_reg x as r -> push r stk; op_recall stk regtab; op_eval stk regtab
         | _ -> push e stk
+and op_evalreg stk regtab r = let len = String.length r in
+        let rname = String.sub r 1 (len - 1) in
+        push (Stk_reg rname) stk; op_eval stk regtab
 and op_fold stk regtab =
     let e = pop stk in match e with
         | Stk_uneval x -> let times = (length stk) - 1 in
@@ -90,6 +94,7 @@ and eval_oper stk regtab o = match o with
     | Oper_recall -> op_recall stk regtab
     | Oper_regs -> op_regs stk regtab
     | Oper_clearreg -> op_clearref stk regtab
+    | Oper_evalreg r -> op_evalreg stk regtab r
 and eval_command stk regtab c = match c with
     | Stk_elem x -> push x stk
     | Oper x -> eval_oper stk regtab x
