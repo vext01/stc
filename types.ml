@@ -7,11 +7,15 @@ type operator =
     | Oper_minus
     | Oper_mult
     | Oper_div
+    | Oper_pow
+    | Oper_mod
+    | Oper_abs
     (* stack management *)
     | Oper_del
     | Oper_swap
     | Oper_clear
     | Oper_dump
+    | Oper_dup
     (* black magic *)
     | Oper_eval
     | Oper_fold

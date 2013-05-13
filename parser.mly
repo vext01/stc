@@ -10,6 +10,7 @@
 %token LCHEV RCHEV COMMA
 %token PLUS MINUS DIV MULT
 %token SWAP DUMP EVAL DEL CLEAR FOLD APPROX
+%token POW ABS MOD DUP
 %token ENDLINE
 
 %start input
@@ -43,6 +44,10 @@ oper:
     | CLEAR             { Oper Oper_clear }
     | FOLD              { Oper Oper_fold }
     | APPROX            { Oper Oper_approx }
+    | POW               { Oper Oper_pow }
+    | MOD               { Oper Oper_mod }
+    | ABS               { Oper Oper_abs }
+    | DUP               { Oper Oper_dup }
 
 uneval:
     | LCHEV expr RCHEV  { $2 }

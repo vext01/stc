@@ -28,6 +28,13 @@ let op_approx stk =
         | Stk_num n -> push (Stk_str (approx_num_fix 8 n)) stk
         | _ -> raise Type_error
 
+let op_dup stk =
+    let e = pop stk in push e stk; push e stk
+
+let op_abs stk = match pop stk with
+        | Stk_num o -> push (Stk_num (abs_num o)) stk
+        | _ -> raise Type_error
+
 let rec op_eval stk =
     let e = pop stk in match e with
         | Stk_uneval l -> eval_command_list stk l
@@ -51,6 +58,10 @@ and eval_oper stk o = match o with
     | Oper_eval -> op_eval stk
     | Oper_fold -> op_fold stk
     | Oper_approx -> op_approx stk
+    | Oper_dup -> op_dup stk
+    | Oper_mod -> op_eval_simple Num.mod_num stk
+    | Oper_pow -> op_eval_simple Num.power_num stk
+    | Oper_abs -> op_abs stk
 and eval_command stk c = match c with
     | Stk_elem x -> push x stk
     | Oper x -> eval_oper stk x

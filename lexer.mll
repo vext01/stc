@@ -36,6 +36,10 @@ rule token = parse
     | 'c'                   { CLEAR }
     | 'f'                   { FOLD }
     | 'a'                   { APPROX }
+    | '%'                   { MOD }
+    | '|'                   { ABS }
+    | 'd'                   { DUP }
+    | '^'                   { POW }
     | '\n'                  { ENDLINE }
     | eof                   { raise End_of_file }
     | _                     { token lexbuf }
