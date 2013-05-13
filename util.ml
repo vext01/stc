@@ -26,6 +26,7 @@ and oper_str x = match x with
     | Oper_store -> "S"
     | Oper_recall -> "R"
     | Oper_regs -> "r"
+    | Oper_clearreg -> "R"
 and stack_elem_str x = match x with
     | Stk_num n -> string_of_num n
     | Stk_str s -> String.concat "" ["\""; s; "\""]

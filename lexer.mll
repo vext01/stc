@@ -34,6 +34,7 @@ rule token = parse
     | 'e'                   { EVAL }
     | '`'                   { DEL }
     | 'c'                   { CLEAR }
+    | 'C'                   { CLEARREG }
     | 'f'                   { FOLD }
     | 'a'                   { APPROX }
     | '%'                   { MOD }

@@ -51,6 +51,13 @@ let op_regs stk regtab =
     Hashtbl.iter print_reg_entry regtab;
     print_string "\n"
 
+let op_clearref stk regtab = match (pop stk) with
+    | Stk_reg r -> (match (Hashtbl.mem regtab r) with
+        | false -> raise No_reg_error
+        | true -> Hashtbl.remove regtab r
+        )
+    | _ -> raise Type_error
+
 let rec op_eval stk regtab =
     let e = pop stk in match e with
         | Stk_uneval l -> eval_command_list stk regtab l
@@ -82,6 +89,7 @@ and eval_oper stk regtab o = match o with
     | Oper_store -> op_store stk regtab
     | Oper_recall -> op_recall stk regtab
     | Oper_regs -> op_regs stk regtab
+    | Oper_clearreg -> op_clearref stk regtab
 and eval_command stk regtab c = match c with
     | Stk_elem x -> push x stk
     | Oper x -> eval_oper stk regtab x
