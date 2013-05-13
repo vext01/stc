@@ -23,6 +23,7 @@ input:
 
 expr:
     | expr COMMA term   { $1 @ $3 }
+    | expr COMMA        { $1 }
     | term              { $1 }
 
 term:
