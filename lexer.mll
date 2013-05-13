@@ -42,5 +42,8 @@ rule token = parse
     | '^'                   { POW }
     | '\n'                  { ENDLINE }
     | '$' alphanum as x     { REG x }
+    | 'S'                   { STORE }
+    | 'R'                   { RECALL }
+    | 'r'                   { REGS }
     | eof                   { raise End_of_file }
     | _                     { token lexbuf }

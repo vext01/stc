@@ -35,6 +35,10 @@ let op_abs stk = match pop stk with
         | Stk_num o -> push (Stk_num (abs_num o)) stk
         | _ -> raise Type_error
 
+let op_store stk = ()
+let op_recall stk = ()
+let op_regs stk = ()
+
 let rec op_eval stk =
     let e = pop stk in match e with
         | Stk_uneval l -> eval_command_list stk l
@@ -62,6 +66,9 @@ and eval_oper stk o = match o with
     | Oper_mod -> op_eval_simple Num.mod_num stk
     | Oper_pow -> op_eval_simple Num.power_num stk
     | Oper_abs -> op_abs stk
+    | Oper_store -> op_store stk
+    | Oper_recall -> op_recall stk
+    | Oper_regs -> op_regs stk
 and eval_command stk c = match c with
     | Stk_elem x -> push x stk
     | Oper x -> eval_oper stk x

@@ -16,6 +16,10 @@ type operator =
     | Oper_clear
     | Oper_dump
     | Oper_dup
+    (* Register management *)
+    | Oper_store
+    | Oper_recall
+    | Oper_regs
     (* black magic *)
     | Oper_eval
     | Oper_fold
