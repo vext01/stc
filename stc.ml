@@ -14,6 +14,7 @@ let print_prompt stk = let top = top_stack_str stk in
 let print_err x = match x with
     | Stack.Empty -> print_string "  stack underflow\n"
     | Type_error -> print_string "  type error\n"
+    | _ -> print_string "unknown error\n"
 
 let read_loop () =
     let stk = ref (Stack.create ()) in
