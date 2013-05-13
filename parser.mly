@@ -7,8 +7,10 @@
 %}
 
 %token <Num.num> BIGNUM
+%token <string> REG
 %token LCHEV RCHEV COMMA
 %token PLUS MINUS DIV MULT
+%token REG
 %token SWAP DUMP EVAL DEL CLEAR FOLD APPROX
 %token POW ABS MOD DUP
 %token ENDLINE
@@ -31,6 +33,7 @@ term:
     | oper              { [ $1 ] }
     | BIGNUM            { [ Stk_elem (Stk_num $1) ] }
     | uneval            { [ Stk_elem (Stk_uneval $1) ] }
+    | REG               { [ Stk_elem (Stk_reg $1) ] }
 
 oper:
     | PLUS              { Oper Oper_plus }

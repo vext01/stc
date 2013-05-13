@@ -41,5 +41,6 @@ rule token = parse
     | 'd'                   { DUP }
     | '^'                   { POW }
     | '\n'                  { ENDLINE }
+    | '$' alphanum as x     { REG x }
     | eof                   { raise End_of_file }
     | _                     { token lexbuf }
