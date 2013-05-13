@@ -1,5 +1,4 @@
 exception Type_error
-exception Parse_error
 
 type operator =
     (* arithmetic *)
