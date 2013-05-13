@@ -23,6 +23,11 @@ let op_swap stk = let o1 = pop stk in
     let o2 = pop stk in
     push o1 stk; push o2 stk;;
 
+let op_approx stk =
+    let x = pop stk in match x with
+        | Stk_num n -> push (Stk_str (approx_num_fix 8 n)) stk
+        | _ -> raise Type_error
+
 let rec op_eval stk =
     let e = pop stk in match e with
         | Stk_uneval l -> eval_command_list stk l
@@ -45,6 +50,7 @@ and eval_oper stk o = match o with
     | Oper_dump -> op_dump stk
     | Oper_eval -> op_eval stk
     | Oper_fold -> op_fold stk
+    | Oper_approx -> op_approx stk
 and eval_command stk c = match c with
     | Stk_elem x -> push x stk
     | Oper x -> eval_oper stk x

@@ -9,7 +9,7 @@
 %token <Num.num> BIGNUM
 %token LCHEV RCHEV COMMA
 %token PLUS MINUS DIV MULT
-%token SWAP DUMP EVAL DEL CLEAR FOLD
+%token SWAP DUMP EVAL DEL CLEAR FOLD APPROX
 %token ENDLINE
 
 %start input
@@ -42,6 +42,7 @@ oper:
     | DEL               { Oper Oper_del }
     | CLEAR             { Oper Oper_clear }
     | FOLD              { Oper Oper_fold }
+    | APPROX            { Oper Oper_approx }
 
 uneval:
     | LCHEV expr RCHEV  { $2 }

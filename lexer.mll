@@ -35,6 +35,7 @@ rule token = parse
     | '`'                   { DEL }
     | 'c'                   { CLEAR }
     | 'f'                   { FOLD }
+    | 'a'                   { APPROX }
     | '\n'                  { ENDLINE }
     | eof                   { raise End_of_file }
     | _                     { token lexbuf }

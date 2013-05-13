@@ -18,8 +18,10 @@ and oper_str x = match x with
     | Oper_eval -> "e"
     | Oper_dump -> "p"
     | Oper_fold -> "f"
+    | Oper_approx -> "a"
 and stack_elem_str x = match x with
     | Stk_num n -> string_of_num n
+    | Stk_str s -> String.concat "" ["\""; s; "\""]
     | Stk_uneval u -> let cmd_strs = List.map (command_str) u in
         let s = String.concat ", " cmd_strs in sprintf "<%s>" s
 
