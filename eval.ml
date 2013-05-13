@@ -54,6 +54,7 @@ let op_regs stk regtab =
 let rec op_eval stk regtab =
     let e = pop stk in match e with
         | Stk_uneval l -> eval_command_list stk regtab l
+        | Stk_reg x as r -> push r stk; op_recall stk regtab; op_eval stk regtab
         | _ -> push e stk
 and op_fold stk regtab =
     let e = pop stk in match e with
