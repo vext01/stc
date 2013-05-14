@@ -48,4 +48,5 @@ rule token = parse
     | 'R'                   { RECALL }
     | 'r'                   { REGS }
     | eof                   { raise End_of_file }
-    | _                     { token lexbuf }
+    | ' ' '\t'              { token lexbuf }
+    | _                     { BADTOK }

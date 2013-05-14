@@ -14,7 +14,7 @@
 %token REG REGS STORE RECALL CLEARREG
 %token SWAP DUMP EVAL DEL CLEAR FOLD APPROX
 %token POW ABS MOD DUP
-%token ENDLINE
+%token ENDLINE BADTOK
 
 %start input
 %type <Types.command list> input
