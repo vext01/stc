@@ -51,5 +51,5 @@ rule token = parse
     | 'h'
     | 'H'                   { HELP }
     | eof                   { raise End_of_file }
-    | ' ' '\t'              { token lexbuf }
+    (*| ' ' '\t'              { token lexbuf } *)
     | _                     { BADTOK }
