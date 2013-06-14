@@ -3,6 +3,10 @@ open Num
 open Printf
 open Stack
 
+let my_string_of_num x = match x with
+    | Ratio x as x'-> Printf.sprintf "%s  (~%s)" (string_of_num (x')) (approx_num_fix 8 x')
+    | x as x' -> Printf.sprintf "%s" (string_of_num x')
+
 (* print stuff on the stack *)
 let rec command_str x = match x with
     | Oper x -> oper_str x
@@ -31,7 +35,7 @@ and oper_str x = match x with
     | Oper_sum -> "E"
     | Oper_help -> "?"
 and stack_elem_str x = match x with
-    | Stk_num n -> string_of_num n
+    | Stk_num n -> my_string_of_num n
     | Stk_str s -> String.concat "" ["\""; s; "\""]
     | Stk_reg r -> r
     | Stk_uneval u -> let cmd_strs = List.map (command_str) u in
