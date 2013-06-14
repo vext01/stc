@@ -38,6 +38,8 @@ let op_help_str op = match op with
 let print_help_str op = Printf.printf "  %s.\n" (op_help_str op)
 
 let print_help () =
+    print_string "\n Oper    (-:+)\tDescription\n";
+    print_string ((String.make 80 '-') ^ "\n");
     List.iter (print_help_str) show_help_for;
     print_string "\nWhere the stack is [ #n-1; ...; #1; #0 ] ";
     print_string "and #0 is the top of the stack.\n\n"
