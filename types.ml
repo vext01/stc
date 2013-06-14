@@ -26,7 +26,6 @@ type operator =
     (* Other *)
     | Oper_eval
     | Oper_fold
-    | Oper_approx
     | Oper_help
 
 type stack_elem =

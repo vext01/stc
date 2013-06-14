@@ -5,7 +5,7 @@ let show_help_for = [
     Oper_plus; Oper_minus; Oper_mult; Oper_div; Oper_pow; Oper_mod; Oper_abs;
     Oper_sum; Oper_del; Oper_swap; Oper_clear; Oper_dump; Oper_dup; Oper_store;
     Oper_recall; Oper_regs; Oper_clearreg; Oper_evalreg "xxx"; Oper_eval;
-    Oper_fold; Oper_approx; Oper_help
+    Oper_fold; Oper_help
 ]
 
 let op_help_str op = match op with
@@ -33,7 +33,6 @@ let op_help_str op = match op with
     (* Other *)
     | Oper_eval -> "e      (1:n)\tEvaluates #0"
     | Oper_fold -> "f      (n:1)\tFolds the stack over the unevaluated code in #1"
-    | Oper_approx -> "a      (1:1)\tApproximates #1"
     | Oper_help -> "h/?/H  (0:0)\tShows this message"
 
 let print_help_str op = Printf.printf "  %s.\n" (op_help_str op)

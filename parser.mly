@@ -12,7 +12,7 @@
 %token LCHEV RCHEV COMMA
 %token PLUS MINUS DIV MULT SUM
 %token REG REGS STORE RECALL CLEARREG
-%token SWAP DUMP EVAL DEL CLEAR FOLD APPROX
+%token SWAP DUMP EVAL DEL CLEAR FOLD
 %token POW ABS MOD DUP
 %token HELP
 %token ENDLINE BADTOK
@@ -48,7 +48,6 @@ oper:
     | DEL               { Oper Oper_del }
     | CLEAR             { Oper Oper_clear }
     | FOLD              { Oper Oper_fold }
-    | APPROX            { Oper Oper_approx }
     | POW               { Oper Oper_pow }
     | MOD               { Oper Oper_mod }
     | ABS               { Oper Oper_abs }

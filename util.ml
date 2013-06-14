@@ -24,7 +24,6 @@ and oper_str x = match x with
     | Oper_eval -> "e"
     | Oper_dump -> "p"
     | Oper_fold -> "f"
-    | Oper_approx -> "a"
     | Oper_mod -> "%"
     | Oper_abs -> "|"
     | Oper_pow -> "^"
