@@ -3,8 +3,10 @@ open Num
 open Printf
 open Stack
 
+let g_precision = 8   (* decimal places for ratio approximations *)
+
 let my_string_of_num x = match x with
-    | Ratio x as x'-> Printf.sprintf "%s  (~%s)" (string_of_num (x')) (approx_num_fix 8 x')
+    | Ratio x as x'-> Printf.sprintf "%s  (~%s)" (string_of_num (x')) (approx_num_fix g_precision x')
     | x as x' -> Printf.sprintf "%s" (string_of_num x')
 
 (* print stuff on the stack *)
