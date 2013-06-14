@@ -58,7 +58,6 @@ let op_clearref stk regtab = match (pop stk) with
         )
     | _ -> raise Type_error
 
-
 let rec op_eval stk regtab =
     let e = pop stk in match e with
         | Stk_uneval l -> eval_command_list stk regtab l
@@ -74,6 +73,9 @@ and op_fold stk regtab =
                 push e stk; op_eval stk regtab
             done
         | _ -> raise Type_error
+and op_sum stk regtab =
+    Stack.push (Stk_uneval [Oper Oper_plus]) stk;
+    op_fold stk regtab
 and eval_oper stk regtab o = match o with
     | Oper_plus -> op_eval_simple Num.add_num stk
     | Oper_minus -> op_eval_simple Num.sub_num stk
@@ -95,6 +97,7 @@ and eval_oper stk regtab o = match o with
     | Oper_regs -> op_regs stk regtab
     | Oper_clearreg -> op_clearref stk regtab
     | Oper_evalreg r -> op_evalreg stk regtab r
+    | Oper_sum -> op_sum stk regtab
 and eval_command stk regtab c = match c with
     | Stk_elem x -> push x stk
     | Oper x -> eval_oper stk regtab x

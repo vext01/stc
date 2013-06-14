@@ -47,6 +47,7 @@ rule token = parse
     | 'S'                   { STORE }
     | 'R'                   { RECALL }
     | 'r'                   { REGS }
+    | 'E'                   { SUM }
     | eof                   { raise End_of_file }
     | ' ' '\t'              { token lexbuf }
     | _                     { BADTOK }

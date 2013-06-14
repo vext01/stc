@@ -10,6 +10,7 @@ type operator =
     | Oper_pow
     | Oper_mod
     | Oper_abs
+    | Oper_sum
     (* stack management *)
     | Oper_del
     | Oper_swap

@@ -10,7 +10,7 @@
 %token <string> REG
 %token <string> EVALREG
 %token LCHEV RCHEV COMMA
-%token PLUS MINUS DIV MULT
+%token PLUS MINUS DIV MULT SUM
 %token REG REGS STORE RECALL CLEARREG
 %token SWAP DUMP EVAL DEL CLEAR FOLD APPROX
 %token POW ABS MOD DUP
@@ -57,6 +57,7 @@ oper:
     | RECALL            { Oper Oper_recall }
     | CLEARREG          { Oper Oper_clearreg }
     | EVALREG           { Oper (Oper_evalreg $1) }
+    | SUM               { Oper Oper_sum }
 
 uneval:
     | LCHEV expr RCHEV  { $2 }
