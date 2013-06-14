@@ -98,6 +98,7 @@ and eval_oper stk regtab o = match o with
     | Oper_clearreg -> op_clearref stk regtab
     | Oper_evalreg r -> op_evalreg stk regtab r
     | Oper_sum -> op_sum stk regtab
+    | Oper_help -> Help.print_help ()
 and eval_command stk regtab c = match c with
     | Stk_elem x -> push x stk
     | Oper x -> eval_oper stk regtab x

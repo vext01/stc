@@ -23,10 +23,11 @@ type operator =
     | Oper_regs
     | Oper_clearreg
     | Oper_evalreg of string
-    (* black magic *)
+    (* Other *)
     | Oper_eval
     | Oper_fold
     | Oper_approx
+    | Oper_help
 
 type stack_elem =
     | Stk_num of Num.num

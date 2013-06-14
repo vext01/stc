@@ -14,6 +14,7 @@
 %token REG REGS STORE RECALL CLEARREG
 %token SWAP DUMP EVAL DEL CLEAR FOLD APPROX
 %token POW ABS MOD DUP
+%token HELP
 %token ENDLINE BADTOK
 
 %start input
@@ -58,6 +59,7 @@ oper:
     | CLEARREG          { Oper Oper_clearreg }
     | EVALREG           { Oper (Oper_evalreg $1) }
     | SUM               { Oper Oper_sum }
+    | HELP              { Oper Oper_help }
 
 uneval:
     | LCHEV expr RCHEV  { $2 }
