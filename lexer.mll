@@ -16,6 +16,7 @@
 
 let digit = ['0'-'9']
 let alphanum = ['a'-'z' 'A'-'Z' '0'-'9']
+let white = [' ' '\t']+
 
 rule token = parse
     | '<'                   { LCHEV }
@@ -51,5 +52,5 @@ rule token = parse
     | 'h'
     | 'H'                   { HELP }
     | eof                   { raise End_of_file }
-    (*| ' ' '\t'              { token lexbuf } *)
+    | white                 { token lexbuf }
     | _                     { BADTOK }
